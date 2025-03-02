@@ -10,6 +10,10 @@ Paste into terminal(only the first time): ``` git clone https://github.com/CP-Ka
 1. ``` npm install ```
 2. ``` npm run dev ```
 
+## Create and Switch to New Branch
+
+1. ``` git branch (name) ```
+2. ``` git switch (name) ```
 
 
 # vue-project
