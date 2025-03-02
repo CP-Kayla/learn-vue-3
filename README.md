@@ -6,8 +6,8 @@ This template should help get you started developing with Vue 3 in Vite.
 
 Paste into terminal(only the first time): git clone https://github.com/CP-Kayla/learn-vue-3.git
 
-1. ```sh cd learn-vue-3 ```
-2. code .
+1. ``` cd learn-vue-3 ```
+2. ``` code . ```
 
 
 
