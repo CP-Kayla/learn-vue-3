@@ -1,7 +1,7 @@
 # ✏️ Personal Notes
 ## To open your learn-vue-3 GitHub repository in VS Code
 
-Paste into terminal(only the first time): ``` git clone https://github.com/CP-Kayla/learn-vue-3.git ```
+Paste into terminal (only the first time): ``` git clone https://github.com/CP-Kayla/learn-vue-3.git ```
 
 1. ``` cd learn-vue-3 ```
 2. ``` code . ```
