@@ -16,6 +16,14 @@ Paste into terminal(only the first time): ``` git clone https://github.com/CP-Ka
 1. ``` git branch (name) ```
 2. ``` git switch (name) ```
 
+## Commit VSCode to Github
+
+1. ``` git add . ```
+2. ``` git commit -m "(name)" ```
+3. ``` git push ```
+4. ``` git push --set-upstream origin computed-properties ```
+5. ``` git switch main ```
+
 
 # 🏫 vue-project (Teacher Notes)
 
