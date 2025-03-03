@@ -1,45 +1,68 @@
 <template>
   <h1>{{ message }}</h1>
-  <button @click="sortUsersByAge">Sort users by age</button>
-  <button @click="hideInactiveUsers">Hide inactive users</button>
-  <button @click="showFirstTwoUsers">Show first two users</button>
-  <ul>
-    <li v-for="(user, index) in users" :key="user.id">
-      {{ index }} - {{ user.id }} - {{ user.name }} - {{ user.age }} -
-      {{ user.isActive }}
-    </li>
-  </ul>
+  <div class="card">
+    <h2 ref="title">This is the App component.</h2>
+    <h2>Number: {{ number }}</h2>
+    <button @click="number++">Increment number by one</button>
+    <button @click="isShow = !isShow">Toggle component1</button>
+    <Component1 v-if="isShow"></Component1>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  ref,
+  watch
+} from 'vue'
 
-let message = ref('Hello, Array Change Detection!')
+import Component1 from './Component1.vue'
 
-const users = ref([
-  { id: 1001, name: 'John Smith', age: 26, isActive: false },
-  { id: 1002, name: 'Tom Doe', age: 16, isActive: false },
-  { id: 1003, name: 'Frankin Wong', age: 18, isActive: true }
-])
+let message = ref('Hello, Lifecycle Hooks!')
 
-function sortUsersByAge() {
-  users.value.sort((a, b) => a.age - b.age)
-}
+let number = ref(1)
+let title = ref(null)
 
-// filter is a non-mutating method, so we need to replace the old array
-function hideInactiveUsers() {
-  users.value = users.value.filter((user) => user.isActive)
-}
+let isShow = ref(true)
 
-// slice is a non-mutating method, so we need to replace the old array
-function showFirstTwoUsers() {
-  users.value = users.value.slice(0, 2)
-}
+console.log('App component is setup.')
+
+onBeforeMount(() => {
+  console.log('App component is before mount.')
+  console.log(number.value) // The ref data works.
+  console.log(title.value) // Since the component has not yet been mounted, you won't have access to the component's template or DOM elements within onBeforeMount.
+})
+onMounted(() => {
+  console.log('App component is mounted.')
+  console.log(title.value) // This works once the component is mounted.
+})
+onBeforeUpdate(() => {
+  console.log('App component is before update.')
+})
+onUpdated(() => {
+  console.log('App component is updated.')
+})
+onBeforeUnmount(() => {
+  console.log('App component is before unmount.')
+})
+onUnmounted(() => {
+  console.log('App component is unmounted.')
+})
+watch(number, () => {
+  console.log('number changes!')
+})
 </script>
 
 <style scoped>
-.inactive {
-  color: red;
-  text-decoration: line-through;
+.card {
+  background-color: purple;
+  color: white;
+  padding: 20px 10px;
+  margin-bottom: 10px;
 }
 </style>
