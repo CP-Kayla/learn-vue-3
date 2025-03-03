@@ -1,45 +1,39 @@
 <template>
-  <h1>{{ message }}</h1>
-  <button @click="sortUsersByAge">Sort users by age</button>
-  <button @click="hideInactiveUsers">Hide inactive users</button>
-  <button @click="showFirstTwoUsers">Show first two users</button>
-  <ul>
-    <li v-for="(user, index) in users" :key="user.id">
-      {{ index }} - {{ user.id }} - {{ user.name }} - {{ user.age }} -
-      {{ user.isActive }}
-    </li>
-  </ul>
+  <div class="card">
+    <h1 ref="title">Hello, Template Refs!</h1>
+    <input type="text" ref="input" />
+    <button @click="printDomElements">Print DOM elements in console log</button>
+    <button @click="changeTitle">Change title</button>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-let message = ref('Hello, Array Change Detection!')
+// declare a ref to hold the element reference
+// the name must match template ref value
+let title = ref()
+const input = ref()
 
-const users = ref([
-  { id: 1001, name: 'John Smith', age: 26, isActive: false },
-  { id: 1002, name: 'Tom Doe', age: 16, isActive: false },
-  { id: 1003, name: 'Frankin Wong', age: 18, isActive: true }
-])
-
-function sortUsersByAge() {
-  users.value.sort((a, b) => a.age - b.age)
+function printDomElements() {
+  console.log(title.value)
+  console.log(input.value)
 }
 
-// filter is a non-mutating method, so we need to replace the old array
-function hideInactiveUsers() {
-  users.value = users.value.filter((user) => user.isActive)
+function changeTitle() {
+  title.value.innerText = 'Hello world!'
 }
 
-// slice is a non-mutating method, so we need to replace the old array
-function showFirstTwoUsers() {
-  users.value = users.value.slice(0, 2)
-}
+onMounted(() => {
+  input.value.focus() // programmatically focus an input on component mount
+})
 </script>
 
 <style scoped>
-.inactive {
-  color: red;
-  text-decoration: line-through;
+.card {
+  background-color: purple;
+  color: white;
+  padding: 20px 10px;
+  margin-bottom: 10px;
 }
 </style>
