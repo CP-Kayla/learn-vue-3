@@ -1,45 +1,92 @@
 <template>
   <h1>{{ message }}</h1>
-  <button @click="sortUsersByAge">Sort users by age</button>
-  <button @click="hideInactiveUsers">Hide inactive users</button>
-  <button @click="showFirstTwoUsers">Show first two users</button>
-  <ul>
-    <li v-for="(user, index) in users" :key="user.id">
-      {{ index }} - {{ user.id }} - {{ user.name }} - {{ user.age }} -
-      {{ user.isActive }}
-    </li>
-  </ul>
+  <div>
+    <form @submit.prevent="register">
+      <div>
+        <label for="email">Email:</label>
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          placeholder="Enter your email"
+        />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          placeholder="Create a password"
+        />
+      </div>
+      <button type="submit" :disabled="!isFormValid">Register</button>
+    </form>
+  </div>
+  <hr />
+  <div class="card">
+    <h2>Name: {{ wizard1.name }}</h2>
+    <h2>Wand: {{ wizard1.wand }}</h2>
+    <h2>Age: {{ wizard1.age }}</h2>
+    <button @click="wizard1.name = wizard1.name.toUpperCase()">
+      Change name to upper case
+    </button>
+    <button @click="wizard1.wand.core = 'Unicorn hair'">
+      Change wand core
+    </button>
+    <button @click="wizard1.age = 20">Change age</button>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
+let message = ref('Hello, watchEffect!')
+const email = ref('')
+const password = ref('')
+const isFormValid = ref(false)
 
-let message = ref('Hello, Array Change Detection!')
+// watch([email, password], () => {
+//   const hasEmail = email.value.length > 0
+//   const hasPassword = password.value.length > 0
+//   isFormValid.value = hasEmail && hasPassword
+// })
 
-const users = ref([
-  { id: 1001, name: 'John Smith', age: 26, isActive: false },
-  { id: 1002, name: 'Tom Doe', age: 16, isActive: false },
-  { id: 1003, name: 'Frankin Wong', age: 18, isActive: true }
-])
+watchEffect(() => {
+  console.log('watchEffect')
+  const hasEmail = email.value.length > 0
+  const hasPassword = password.value.length > 0
+  isFormValid.value = hasEmail && hasPassword
+})
 
-function sortUsersByAge() {
-  users.value.sort((a, b) => a.age - b.age)
+const register = () => {
+  alert('Registration successful!')
+  // Registration logic goes here
 }
 
-// filter is a non-mutating method, so we need to replace the old array
-function hideInactiveUsers() {
-  users.value = users.value.filter((user) => user.isActive)
-}
+let wizard1 = ref({
+  id: 1001,
+  name: 'Harry Potter',
+  house: 'Gryffindor',
+  age: 17,
+  wand: {
+    core: 'Phoenix feather',
+    wood: 'Holly'
+  }
+})
 
-// slice is a non-mutating method, so we need to replace the old array
-function showFirstTwoUsers() {
-  users.value = users.value.slice(0, 2)
-}
+watchEffect(() => {
+  console.log(wizard1.value.name, wizard1.value.wand.core)
+})
+
+watchEffect(() => {
+  console.log(wizard1.value)
+})
 </script>
-
 <style scoped>
-.inactive {
-  color: red;
-  text-decoration: line-through;
+.card {
+  background-color: purple;
+  color: white;
+  padding: 20px 10px;
+  margin-bottom: 10px;
 }
 </style>
